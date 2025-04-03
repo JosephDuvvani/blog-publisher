@@ -71,7 +71,7 @@ const Login = () => {
     const cookies = new Cookies(null, {path: '/'});
 
     useEffect(() => {
-        if (cookies.get('jwt-refresh-blog')) navigate('/');
+        if (cookies.get('jwt-refresh-blog-p')) navigate('/');
     }, []);
 
     const [error, setError] = useState();
