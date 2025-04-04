@@ -7,6 +7,8 @@ import { format } from "date-fns";
 import Cookies from "universal-cookie";
 import { fetchToken } from "../utils/utils";
 import { jwtDecode } from "jwt-decode";
+import PublishButton from "../components/publishButton";
+import UnpublishButton from "../components/unpublishButton";
 
 
 const Wrapper = styled.div`
@@ -118,10 +120,12 @@ const Home = () => {
                     }
                     {posts.length > 0 && posts.map((post) => (
                         <div key={post.id}>
-                        <header className="post">
                             <h2>{post.title}</h2>
                             <div>{format(post.createdAt, "MMMM d, yyyy")}</div>
-                        </header>
+                            {post.published ? 
+                              <UnpublishButton postId={post.id} posts={posts} setPosts={setPosts} /> :
+                              <PublishButton postId={post.id} posts={posts} setPosts={setPosts} />
+                            }
                         </div>
                     ))}
                   </>
