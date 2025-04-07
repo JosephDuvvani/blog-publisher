@@ -8,8 +8,6 @@ const Head = styled.header`
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-    max-width: 50rem;
-    margin: auto;
     padding: 1rem;
 `;
 
@@ -79,11 +77,11 @@ const Name = styled.span`
 `;
 
 const Header = () => {
-    const {user, setUser} = useContext(AuthContext);
-    const cookies = new Cookies(null, {path: '/'});
+    const { user, setUser } = useContext(AuthContext);
+    const cookies = new Cookies(null, { path: '/' });
     const token = cookies.get('jwt-refresh-blog-p');
 
-    function logout () {
+    function logout() {
         const options = {
             method: 'POST',
             headers: {

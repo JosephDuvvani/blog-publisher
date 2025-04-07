@@ -10,9 +10,12 @@ import { jwtDecode } from "jwt-decode";
 import PublishButton from "../components/publishButton";
 import UnpublishButton from "../components/unpublishButton";
 import DeleteButton from "../components/deleteButton";
+import CreateButton from "../components/createButton";
 
 const Wrapper = styled.div`
   min-height: 100svh;
+  max-width: 50rem;
+  margin: auto;
 `;
 
 const Title = styled.h1`
@@ -50,11 +53,14 @@ const Login = styled(Button)`
   background-color: hsl(240, 43.8%, 83%);
 `;
 
+const Main = styled.main`
+  padding: 1rem;
+`;
+
 const Post = styled.div`
   display: grid;
   grid-template-columns: 1fr min-content;
-  max-width: 50rem;
-  margin: auto;
+  margin-top: 1rem;
   padding: 1rem;
   box-shadow: 0 2px 5px -1px hsl(0, 0%, 0%, 0.2);
   border-radius: 6px;
@@ -74,9 +80,15 @@ const PostDate = styled.div`
 
 const PostButtons = styled.div`
   grid-column: 2;
-  grid-row: 1/3;
+  grid-row: 1;
   align-self: center;
   display: flex;
+  gap: .7rem;
+`;
+
+const Caption = styled.div`
+  grid-column: 1/-1;
+  margin-top: .9rem;
 `;
 
 const Home = () => {
@@ -140,7 +152,8 @@ const Home = () => {
       {user &&
         <>
           <Header />
-          <main>
+          <Main>
+            <CreateButton posts={posts} setPosts={setPosts} />
             {posts &&
               <>
                 {posts.length === 0 &&
@@ -157,11 +170,12 @@ const Home = () => {
                       }
                       <DeleteButton postId={post.id} posts={posts} setPosts={setPosts} />
                     </PostButtons>
+                    <Caption>{post.caption}</Caption>
                   </Post>
                 ))}
               </>
             }
-          </main>
+          </Main>
         </>
       }
     </Wrapper>

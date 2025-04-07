@@ -5,7 +5,7 @@ import { fetchToken } from "../utils/utils";
 
 const Button = styled.button`
     font-size: .95rem;
-    padding: .25em .75em;
+    padding: 0;
     border: none;
     color: hsl(0, 63.80%, 43%);
     background-color: transparent;

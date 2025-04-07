@@ -4,23 +4,24 @@ import Cookies from "universal-cookie";
 import { fetchToken } from "../utils/utils";
 
 const Button = styled.button`
-    font-size: .95rem;
-    padding: 0;
+    font-size: 1rem;
+    padding: .4em 1em;
     border: none;
-    color: hsl(180, 43.80%, 43%);
-    background-color: transparent;
+    color: hsl(180, 43.80%, 100%);
+    background-color: hsl(280, 73.80%, 50%);
+    border-radius: 4px;
     cursor: pointer;
 
+    &:hover,
     &:focus {
         outline: none;
-        border-radius: 4px;
-        background-color:hsl(180, 13%, 94%);
+        background-color:hsl(280, 73%, 65%);
     }
 `;
 
-const PublishButton = ({ postId, posts, setPosts }) => {
+const CreateButton = ({ posts, setPosts }) => {
     const handlePublish = async (e) => {
-        const url = `http://localhost:3000/posts/${postId}/publish`;
+        const url = `http://localhost:3000/posts`;
         const cookies = new Cookies(null, { path: '/' });
         let accessToken = cookies.get('jwt-access-blog-p');
         const refreshToken = cookies.get('jwt-refresh-blog-p');
@@ -42,7 +43,7 @@ const PublishButton = ({ postId, posts, setPosts }) => {
 
         if (accessToken) {
             const options = {
-                method: 'PUT',
+                method: 'POST',
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -53,20 +54,18 @@ const PublishButton = ({ postId, posts, setPosts }) => {
                 .then(data => {
                     if (data.errors)
                         throw new Error(data.errors[0].msg);
-
-                    const newPosts = [...posts].map(post => {
-                        if (post.id === postId)
-                            return { ...post, published: true }
-                        return post;
-                    });
-                    setPosts(newPosts);
+                    else if (data.createdPost) {
+                        const post = data.createdPost;
+                        const newPosts = [...posts, post]
+                        setPosts(newPosts);
+                    }
                 })
         }
     }
 
     return (
-        <Button onClick={handlePublish}>publish</Button>
+        <Button onClick={handlePublish}>New Post</Button>
     )
 }
 
-export default PublishButton
+export default CreateButton
