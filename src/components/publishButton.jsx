@@ -7,35 +7,38 @@ const Button = styled.button`
     font-size: .95rem;
     padding: .25em .75em;
     border: none;
-    background-color:hsl(280, 43.80%, 83%);
+    color: hsl(180, 43.80%, 43%);
+    background-color: transparent;
     cursor: pointer;
 
-    &:hover {
-        background-color:hsl(180, 43.80%, 83%);
+    &:focus {
+        outline: none;
+        border-radius: 4px;
+        background-color:hsl(180, 13%, 94%);
     }
 `;
 
-const PublishButton = ({postId, posts, setPosts}) => {
+const PublishButton = ({ postId, posts, setPosts }) => {
     const handlePublish = async (e) => {
         const url = `http://localhost:3000/posts/${postId}/publish`;
-        const cookies = new Cookies(null, {path: '/'});
+        const cookies = new Cookies(null, { path: '/' });
         let accessToken = cookies.get('jwt-access-blog-p');
         const refreshToken = cookies.get('jwt-refresh-blog-p');
 
         if (!accessToken && refreshToken) {
             const tokenUrl = 'http://localhost:3000/auth/token'
             const data = await fetchToken(refreshToken, tokenUrl);
-            
+
             if (data.accessToken) {
-              const decoded = jwtDecode(data.accessToken);
-    
-              cookies.set('jwt-access-blog-p', data.accessToken, {
-                  expires: new Date(decoded.exp * 1000),
-              });
-    
-              accessToken = data.accessToken;
+                const decoded = jwtDecode(data.accessToken);
+
+                cookies.set('jwt-access-blog-p', data.accessToken, {
+                    expires: new Date(decoded.exp * 1000),
+                });
+
+                accessToken = data.accessToken;
             }
-          }
+        }
 
         if (accessToken) {
             const options = {
@@ -52,8 +55,8 @@ const PublishButton = ({postId, posts, setPosts}) => {
                         throw new Error(data.errors[0].msg);
 
                     const newPosts = [...posts].map(post => {
-                        if (post.id === postId) 
-                            return {...post, published: true}
+                        if (post.id === postId)
+                            return { ...post, published: true }
                         return post;
                     });
                     setPosts(newPosts);
