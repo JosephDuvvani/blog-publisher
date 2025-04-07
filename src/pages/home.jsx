@@ -9,6 +9,7 @@ import { fetchToken } from "../utils/utils";
 import { jwtDecode } from "jwt-decode";
 import PublishButton from "../components/publishButton";
 import UnpublishButton from "../components/unpublishButton";
+import DeleteButton from "../components/deleteButton";
 
 const Wrapper = styled.div`
   min-height: 100svh;
@@ -55,7 +56,7 @@ const Post = styled.div`
   max-width: 50rem;
   margin: auto;
   padding: 1rem;
-  box-shadow: 0 2px 4px -2px hsl(0, 0%, 0%, 0.2);
+  box-shadow: 0 2px 5px -1px hsl(0, 0%, 0%, 0.2);
   border-radius: 6px;
 
   & .date {
@@ -75,6 +76,7 @@ const PostButtons = styled.div`
   grid-column: 2;
   grid-row: 1/3;
   align-self: center;
+  display: flex;
 `;
 
 const Home = () => {
@@ -153,6 +155,7 @@ const Home = () => {
                         <UnpublishButton postId={post.id} posts={posts} setPosts={setPosts} /> :
                         <PublishButton postId={post.id} posts={posts} setPosts={setPosts} />
                       }
+                      <DeleteButton postId={post.id} posts={posts} setPosts={setPosts} />
                     </PostButtons>
                   </Post>
                 ))}
