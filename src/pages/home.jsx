@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AuthContext } from "../App";
-import Header from "../components/header";
 import { format } from "date-fns";
 import Cookies from "universal-cookie";
 import { fetchToken } from "../utils/utils";
@@ -11,12 +10,7 @@ import PublishButton from "../components/publishButton";
 import UnpublishButton from "../components/unpublishButton";
 import DeleteButton from "../components/deleteButton";
 import CreateButton from "../components/createButton";
-
-const Wrapper = styled.div`
-  min-height: 100svh;
-  max-width: 50rem;
-  margin: auto;
-`;
+import EditButton from "../components/editButton";
 
 const Title = styled.h1`
   color: #56bdbd;
@@ -54,7 +48,7 @@ const Login = styled(Button)`
 `;
 
 const Main = styled.main`
-  padding: 1rem;
+ 
 `;
 
 const Post = styled.div`
@@ -139,7 +133,7 @@ const Home = () => {
   }, [])
 
   return (
-    <Wrapper>
+    <>
       {!user && !isLoadingUser &&
         <>
           <Title>TOP Blog Publisher</Title>
@@ -151,34 +145,32 @@ const Home = () => {
       }
       {user &&
         <>
-          <Header />
-          <Main>
-            <CreateButton posts={posts} setPosts={setPosts} />
-            {posts &&
-              <>
-                {posts.length === 0 &&
-                  <h4>No posts found</h4>
-                }
-                {posts.length > 0 && posts.map((post) => (
-                  <Post key={post.id}>
-                    <PostTitle>{post.title}</PostTitle>
-                    <PostDate>{format(post.createdAt, "MMMM d, yyyy")}</PostDate>
-                    <PostButtons>
-                      {post.published ?
-                        <UnpublishButton postId={post.id} posts={posts} setPosts={setPosts} /> :
-                        <PublishButton postId={post.id} posts={posts} setPosts={setPosts} />
-                      }
-                      <DeleteButton postId={post.id} posts={posts} setPosts={setPosts} />
-                    </PostButtons>
-                    <Caption>{post.caption}</Caption>
-                  </Post>
-                ))}
-              </>
-            }
-          </Main>
+          <CreateButton posts={posts} setPosts={setPosts} />
+          {posts &&
+            <>
+              {posts.length === 0 &&
+                <h4>No posts found</h4>
+              }
+              {posts.length > 0 && posts.map((post) => (
+                <Post key={post.id}>
+                  <PostTitle>{post.title}</PostTitle>
+                  <PostDate>{format(post.createdAt, "MMMM d, yyyy")}</PostDate>
+                  <PostButtons>
+                    <EditButton postId={post.id} />
+                    {post.published ?
+                      <UnpublishButton postId={post.id} posts={posts} setPosts={setPosts} /> :
+                      <PublishButton postId={post.id} posts={posts} setPosts={setPosts} />
+                    }
+                    <DeleteButton postId={post.id} posts={posts} setPosts={setPosts} />
+                  </PostButtons>
+                  <Caption>{post.caption}</Caption>
+                </Post>
+              ))}
+            </>
+          }
         </>
       }
-    </Wrapper>
+    </>
   )
 }
 

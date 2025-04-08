@@ -2,10 +2,19 @@ import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Cookies from "universal-cookie";
+import Header from "./components/header";
+import styled from "styled-components";
 
 const body = document.getElementsByTagName('body');
 body[0].style.fontFamily = 'Arial, Helvetica, sans-serif';
 body[0].style.margin = 0;
+
+const Wrapper = styled.main`
+  min-height: 100svh;
+  max-width: 50rem;
+  margin: auto;
+  padding: 1rem;
+`;
 
 export const AuthContext = createContext({});
 
@@ -14,7 +23,7 @@ function App() {
   const [isLoadingUser, setIsLoadingUser] = useState(true);
 
   useEffect(() => {
-    const cookies = new Cookies(null, {path: '/'});
+    const cookies = new Cookies(null, { path: '/' });
     const token = cookies.get('jwt-refresh-blog-p');
     if (token) {
       const decoded = jwtDecode(token);
@@ -24,9 +33,14 @@ function App() {
   }, []);
 
   return (
-    <AuthContext.Provider value={{user, setUser, isLoadingUser}}>  
-      <Outlet />
-    </AuthContext.Provider>
+    <>
+      <AuthContext.Provider value={{ user, setUser, isLoadingUser }}>
+        {user && <Header />}
+        <Wrapper>
+          <Outlet />
+        </Wrapper>
+      </AuthContext.Provider>
+    </>
   )
 }
 
