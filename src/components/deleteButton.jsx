@@ -19,7 +19,7 @@ const Button = styled.button`
 `;
 
 const DeleteButton = ({ postId, posts, setPosts }) => {
-    const handlePublish = async (e) => {
+    const handleDelete = async (e) => {
         const url = `http://localhost:3000/posts/${postId}`;
         const cookies = new Cookies(null, { path: '/' });
         let accessToken = cookies.get('jwt-access-blog-p');
@@ -61,7 +61,7 @@ const DeleteButton = ({ postId, posts, setPosts }) => {
     }
 
     return (
-        <Button onClick={handlePublish}>delete</Button>
+        <Button onClick={handleDelete}>delete</Button>
     )
 }
 
