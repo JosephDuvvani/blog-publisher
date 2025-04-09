@@ -6,6 +6,7 @@ import { fetchToken } from "../utils/utils";
 const Button = styled.button`
     font-size: 1rem;
     padding: .4em 1em;
+    margin-bottom: 2rem;
     border: none;
     color: hsl(180, 43.80%, 100%);
     background-color: hsl(280, 73.80%, 50%);
@@ -56,7 +57,7 @@ const CreateButton = ({ posts, setPosts }) => {
                         throw new Error(data.errors[0].msg);
                     else if (data.createdPost) {
                         const post = data.createdPost;
-                        const newPosts = [...posts, post]
+                        const newPosts = [post, ...posts]
                         setPosts(newPosts);
                     }
                 })

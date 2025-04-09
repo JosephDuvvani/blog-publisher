@@ -61,7 +61,7 @@ const DeleteButton = ({ postId, posts, setPosts }) => {
     }
 
     return (
-        <Button onClick={handleDelete}>delete</Button>
+        <Button onClick={handleDelete}>Delete</Button>
     )
 }
 

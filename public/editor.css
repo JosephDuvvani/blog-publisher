@@ -78,6 +78,8 @@
 
 .tiptap {
     min-height: 10rem;
+    max-height: 40rem;
+    overflow-y: scroll;
 }
 
 .title-editor input,

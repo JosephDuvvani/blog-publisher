@@ -47,17 +47,9 @@ const Login = styled(Button)`
   background-color: hsl(240, 43.8%, 83%);
 `;
 
-const Main = styled.main`
- 
-`;
-
 const Post = styled.div`
-  display: grid;
-  grid-template-columns: 1fr min-content;
-  margin-top: 1rem;
+  margin-bottom: 3rem;
   padding: 1rem;
-  box-shadow: 0 2px 5px -1px hsl(0, 0%, 0%, 0.2);
-  border-radius: 6px;
 
   & .date {
     font-size: 0.9rem;
@@ -65,24 +57,21 @@ const Post = styled.div`
 `;
 
 const PostTitle = styled.h1`
-  margin: 0;
+  font-size: 2rem;
+  margin-block: 0 1rem;
 `;
 
 const PostDate = styled.div`
-  font-size: .9rem;
+  color: gray;
 `;
 
 const PostButtons = styled.div`
-  grid-column: 2;
-  grid-row: 1;
-  align-self: center;
   display: flex;
   gap: .7rem;
 `;
 
 const Caption = styled.div`
-  grid-column: 1/-1;
-  margin-top: .9rem;
+  margin-block: .9rem 1.2rem;
 `;
 
 const Home = () => {
@@ -155,6 +144,7 @@ const Home = () => {
                 <Post key={post.id}>
                   <PostTitle>{post.title}</PostTitle>
                   <PostDate>{format(post.createdAt, "MMMM d, yyyy")}</PostDate>
+                  <Caption>{post.caption}</Caption>
                   <PostButtons>
                     <EditButton postId={post.id} />
                     {post.published ?
@@ -163,7 +153,6 @@ const Home = () => {
                     }
                     <DeleteButton postId={post.id} posts={posts} setPosts={setPosts} />
                   </PostButtons>
-                  <Caption>{post.caption}</Caption>
                 </Post>
               ))}
             </>

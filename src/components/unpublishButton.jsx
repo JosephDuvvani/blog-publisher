@@ -65,7 +65,7 @@ const UnpublishButton = ({ postId, posts, setPosts }) => {
     }
 
     return (
-        <Button onClick={handlePublish}>unpublish</Button>
+        <Button onClick={handlePublish}>Unpublish</Button>
     )
 }
 
