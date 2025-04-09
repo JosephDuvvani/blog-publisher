@@ -94,7 +94,9 @@ const Header = () => {
             }),
         }
 
-        fetch('http://localhost:3000/auth/logout', options)
+        const apiUrl = import.meta.env.VITE_BLOG_API_URL;
+
+        fetch(`${apiUrl}/auth/logout`, options)
             .then(res => res.json())
             .then(data => {
                 setUser(null);

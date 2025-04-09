@@ -79,7 +79,8 @@ const Login = () => {
     const emailRef = useRef();
     const pwdRef = useRef();
 
-    const url = 'http://localhost:3000/auth/admin/login';
+    const apiUrl = import.meta.env.VITE_BLOG_API_URL;
+    const url = `${apiUrl}/auth/admin/login`;
 
     function authenticate(e) {
         e.preventDefault();

@@ -65,22 +65,23 @@ const Error = styled.div`
 `;
 
 const Signup = () => {
-    const url = 'http://localhost:3000/auth/admin/signup';
+    const apiUrl = import.meta.env.VITE_BLOG_API_URL;
+    const url = `${apiUrl}/auth/admin/signup`;
     const navigate = useNavigate();
-    const {user, setUser} = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
 
     const [error, setError] = useState();
 
     if (user) navigate('/');
 
-    function handleSubmit (e) {
+    function handleSubmit(e) {
         e.preventDefault();
-        
+
         const _form = new FormData(e.target);
         let data = {};
 
         for (const [key, value] of _form.entries()) {
-            data = {...data, [key]: value};
+            data = { ...data, [key]: value };
         }
 
         const options = {
@@ -97,7 +98,7 @@ const Signup = () => {
                 if (data.errors)
                     setError(data.errors[0]);
                 else {
-                    const cookies = new Cookies(null, {path: '/'});
+                    const cookies = new Cookies(null, { path: '/' });
 
                     cookies.set('jwt-access-blog-p', data.accessToken);
                     cookies.set('jwt-refresh-blog-p', data.refreshToken);
@@ -111,24 +112,24 @@ const Signup = () => {
 
     return (
         <>
-        {!user &&
-            <Wrapper>
-            <Form onSubmit={handleSubmit}>
-                <Title>
-                    <h2>Signup</h2>
-                </Title>
-                <Fields>
-                    <input type="text" name="username" aria-label="Your username" placeholder="Your username" />
-                    <input type="email" name="email" aria-label="Your email" placeholder="Your email" />
-                    <input type="password" name="password" aria-label="Your password" placeholder="Your password" />
-                    <input type="text" name="adpass" aria-label="Your admin passcode (adpass)"  placeholder="Your admin passcode (adpass)"/>
-                    <button type="submit">Signup</button>
-                </Fields>
-                {error && 
-                    <Error>{error.msg}</Error>
-                }
-            </Form>
-        </Wrapper>}
+            {!user &&
+                <Wrapper>
+                    <Form onSubmit={handleSubmit}>
+                        <Title>
+                            <h2>Signup</h2>
+                        </Title>
+                        <Fields>
+                            <input type="text" name="username" aria-label="Your username" placeholder="Your username" />
+                            <input type="email" name="email" aria-label="Your email" placeholder="Your email" />
+                            <input type="password" name="password" aria-label="Your password" placeholder="Your password" />
+                            <input type="text" name="adpass" aria-label="Your admin passcode (adpass)" placeholder="Your admin passcode (adpass)" />
+                            <button type="submit">Signup</button>
+                        </Fields>
+                        {error &&
+                            <Error>{error.msg}</Error>
+                        }
+                    </Form>
+                </Wrapper>}
         </>
     )
 };

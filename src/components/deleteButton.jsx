@@ -20,13 +20,14 @@ const Button = styled.button`
 
 const DeleteButton = ({ postId, posts, setPosts }) => {
     const handleDelete = async (e) => {
-        const url = `http://localhost:3000/posts/${postId}`;
+        const apiUrl = import.meta.env.VITE_BLOG_API_URL;
+        const url = `${apiUrl}/posts/${postId}`;
         const cookies = new Cookies(null, { path: '/' });
         let accessToken = cookies.get('jwt-access-blog-p');
         const refreshToken = cookies.get('jwt-refresh-blog-p');
 
         if (!accessToken && refreshToken) {
-            const tokenUrl = 'http://localhost:3000/auth/token'
+            const tokenUrl = `${apiUrl}/auth/token`;
             const data = await fetchToken(refreshToken, tokenUrl);
 
             if (data.accessToken) {
